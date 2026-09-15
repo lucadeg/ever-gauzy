@@ -5,6 +5,31 @@ import { environment } from '@gauzy/ui-config';
 import { loadPluginUiConfig } from '@gauzy/plugin-ui';
 import { AppBootstrapModule } from './app/bootstrap.module';
 
+const MVX_PRODUCT_NAME = 'MVX Operations';
+const MVX_THEME_COLOR = '#050914';
+
+function setMeta(name: string, content: string): void {
+	let element = document.head.querySelector<HTMLMetaElement>(`meta[name="${name}"]`);
+	if (!element) {
+		element = document.createElement('meta');
+		element.name = name;
+		document.head.appendChild(element);
+	}
+	element.content = content;
+}
+
+function applyMvxProductIdentity(): void {
+	document.title = `${MVX_PRODUCT_NAME} — MVX Ads Master`;
+	document.documentElement.dataset.product = 'mvx-operations';
+	document.documentElement.style.setProperty('--mvx-brand-accent', '#2dc9f7');
+	document.documentElement.style.setProperty('--mvx-brand-background', MVX_THEME_COLOR);
+	setMeta('application-name', MVX_PRODUCT_NAME);
+	setMeta('theme-color', MVX_THEME_COLOR);
+	setMeta('description', 'MVX Ads Master operations workspace powered by the Gauzy application stack.');
+}
+
+applyMvxProductIdentity();
+
 console.log('Environment Mode:', environment.production ? 'Production' : 'Development');
 
 if (environment.production) {
